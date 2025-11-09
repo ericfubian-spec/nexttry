@@ -57,7 +57,7 @@ const SummaryStep: React.FC = () => {
               </div>
             )}
           </div>
-          {getValue('otherIncome', 'has') && (
+          {getValue('otherIncome', 'has') === true && getValue('otherIncome', 'amountMonthly') > 0 && (
             <div className="mt-2 text-sm">
               <span className="text-gray-600">Weitere Einkünfte:</span>
               <span className="font-medium ml-2">

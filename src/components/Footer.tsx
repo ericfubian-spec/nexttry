@@ -42,22 +42,22 @@ export function Footer() {
             <h3 className="text-lg font-semibold mb-4">Services</h3>
             <ul className="space-y-2 text-sm text-gray-300">
               <li>
-                <Link href="/calculator" className="hover:text-white transition-colors">
+                <Link to="/calculator" className="hover:text-white transition-colors">
                   Rentenrechner
                 </Link>
               </li>
               <li>
-                <Link href="/tax-calculator" className="hover:text-white transition-colors">
+                <Link to="/tax-calculator" className="hover:text-white transition-colors">
                   Steuerrechner
                 </Link>
               </li>
               <li>
-                <Link href="/vergleich" className="hover:text-white transition-colors">
+                <Link to="/vergleich" className="hover:text-white transition-colors">
                   Vergleichsrechner
                 </Link>
               </li>
               <li>
-                <Link href="/fonds" className="hover:text-white transition-colors">
+                <Link to="/fonds" className="hover:text-white transition-colors">
                   Fondsparplan
                 </Link>
               </li>

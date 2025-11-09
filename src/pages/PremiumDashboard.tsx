@@ -154,17 +154,42 @@ export const PremiumDashboard: React.FC<PremiumDashboardProps> = ({ language = '
     const occupationalContrib = onboardingData.occupationalPension?.amount || 0;
     const totalMonthlyContrib = privatePensionContrib + riesterContrib + ruerupContrib + occupationalContrib;
 
-    // Calculate projected retirement income
+    // Calculate projected retirement income from statutory pensions
     const publicPension = onboardingData.pensions?.public67 || 0;
     const civilPension = onboardingData.pensions?.civil67 || 0;
     const professionPension = onboardingData.pensions?.profession67 || 0;
     const zvkVblPension = onboardingData.pensions?.zvkVbl67 || 0;
-    const totalProjectedPension = publicPension + civilPension + professionPension + zvkVblPension;
 
-    // Calculate years until retirement (assuming retirement at 67)
-    const currentYear = new Date().getFullYear();
-    const birthYear = onboardingData.personal?.birthYear;
-    const yearsToRetirement = birthYear ? 67 - (currentYear - birthYear) : 0;
+    // Project pension from contributions (simplified calculation)
+    // Assumes contributions continue until retirement with 4% average return
+    // and converts accumulated capital to monthly pension using 4% withdrawal rate
+    const yearsToRetirement = birthYear ? 67 - (currentYear - birthYear) : 30;
+    const estimatedPensionFromContributions = (monthlyContribution: number, years: number): number => {
+      if (monthlyContribution === 0 || years <= 0) return 0;
+      const annualReturn = 0.04; // 4% average return
+      const monthlyReturn = annualReturn / 12;
+      const months = years * 12;
+
+      // Future value of monthly contributions (annuity formula)
+      const futureValue = monthlyContribution * ((Math.pow(1 + monthlyReturn, months) - 1) / monthlyReturn);
+
+      // Convert to monthly pension (4% withdrawal rate)
+      const monthlyPension = (futureValue * 0.04) / 12;
+      return monthlyPension;
+    };
+
+    // Calculate estimated pensions from each contribution type
+    const privatePensionEstimated = estimatedPensionFromContributions(privatePensionContrib, yearsToRetirement);
+    const riesterPensionEstimated = estimatedPensionFromContributions(riesterContrib, yearsToRetirement);
+    const ruerupPensionEstimated = estimatedPensionFromContributions(ruerupContrib, yearsToRetirement);
+    const occupationalPensionEstimated = estimatedPensionFromContributions(occupationalContrib, yearsToRetirement);
+
+    // Total projected pension includes both statutory pensions and estimated pensions from contributions
+    const totalProjectedPension = publicPension + civilPension + professionPension + zvkVblPension +
+                                   privatePensionEstimated + riesterPensionEstimated +
+                                   ruerupPensionEstimated + occupationalPensionEstimated;
+
+    // Calculate retirement year for display
     const retirementYear = birthYear ? birthYear + 67 : currentYear;
 
     // Format currency
@@ -347,7 +372,7 @@ export const PremiumDashboard: React.FC<PremiumDashboardProps> = ({ language = '
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.1 * index, duration: 0.4 }}
                 >
-                  <Link href={action.href}>
+                  <Link to={action.href}>
                     <motion.div
                       onHoverStart={() => setHoveredCard(action.id)}
                       onHoverEnd={() => setHoveredCard(null)}
@@ -457,13 +482,13 @@ export const PremiumDashboard: React.FC<PremiumDashboardProps> = ({ language = '
                     : 'Start planning your retirement now and secure a worry-free future.'}
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-                  <Link href="/calculator">
+                  <Link to="/calculator">
                     <Button size="lg" className="btn-premium-primary group">
                       {language === 'de' ? 'Jetzt berechnen' : 'Calculate Now'}
                       <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                     </Button>
                   </Link>
-                  <Link href="/vergleich">
+                  <Link to="/vergleich">
                     <Button size="lg" variant="outline" className="btn-premium-secondary">
                       {language === 'de' ? 'Produkte vergleichen' : 'Compare Products'}
                     </Button>

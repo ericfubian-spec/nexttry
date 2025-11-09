@@ -154,7 +154,7 @@ export const PremiumHeader: React.FC<PremiumHeaderProps> = ({
     const isHovered = hoveredItem === item.href;
 
     return (
-      <Link href={item.href} onClick={onClick}>
+      <Link to={item.href} onClick={onClick}>
         <motion.div
           className="relative"
           onHoverStart={() => setHoveredItem(item.href)}
@@ -294,7 +294,7 @@ export const PremiumHeader: React.FC<PremiumHeaderProps> = ({
         <div className="container mx-auto px-4 lg:px-8">
           <div className="flex h-20 items-center justify-between">
             {/* Logo / Brand */}
-            <Link href="/">
+            <Link to="/">
               <motion.div
                 className="flex items-center gap-3 cursor-pointer group"
                 whileHover={{ scale: 1.02 }}
@@ -426,7 +426,7 @@ export const PremiumHeader: React.FC<PremiumHeaderProps> = ({
                     {index > 0 && (
                       <ChevronRight className="h-4 w-4 text-muted-foreground flex-shrink-0" />
                     )}
-                    <Link href={crumb.href}>
+                    <Link to={crumb.href}>
                       <motion.span
                         className={cn(
                           'whitespace-nowrap font-medium transition-colors duration-200 hover:text-primary',
