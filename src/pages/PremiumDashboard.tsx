@@ -184,10 +184,23 @@ export const PremiumDashboard: React.FC<PremiumDashboardProps> = ({ language = '
     const ruerupPensionEstimated = estimatedPensionFromContributions(ruerupContrib, yearsToRetirement);
     const occupationalPensionEstimated = estimatedPensionFromContributions(occupationalContrib, yearsToRetirement);
 
-    // Total projected pension includes both statutory pensions and estimated pensions from contributions
-    const totalProjectedPension = publicPension + civilPension + professionPension + zvkVblPension +
-                                   privatePensionEstimated + riesterPensionEstimated +
-                                   ruerupPensionEstimated + occupationalPensionEstimated;
+    // Calculate projected income from current assets
+    // Assumes 5% annual growth until retirement, then 4% withdrawal rate
+    const assetGrowthRate = 0.05; // Conservative 5% annual growth
+    const withdrawalRate = 0.04; // Standard 4% retirement withdrawal rate
+    const futureAssetValue = yearsToRetirement > 0
+      ? totalSavings * Math.pow(1 + assetGrowthRate, yearsToRetirement)
+      : totalSavings;
+    const monthlyAssetIncome = (futureAssetValue * withdrawalRate) / 12;
+
+    // Total projected pension includes:
+    // 1. Statutory pensions (entered by user)
+    // 2. Estimated pensions from contributions (calculated with compound interest)
+    // 3. Income from current assets (grown and converted to monthly income)
+    const totalProjectedPension =
+      publicPension + civilPension + professionPension + zvkVblPension + // Statutory
+      privatePensionEstimated + riesterPensionEstimated + ruerupPensionEstimated + occupationalPensionEstimated + // Contributions
+      monthlyAssetIncome; // Asset growth
 
     // Calculate retirement year for display
     const retirementYear = birthYear ? birthYear + 67 : currentYear;
@@ -206,7 +219,9 @@ export const PremiumDashboard: React.FC<PremiumDashboardProps> = ({ language = '
       {
         label: t.currentSavings,
         value: formatCurrency(totalSavings),
-        change: isCompleted ? '+12.5%' : (language === 'de' ? 'Onboarding abschließen' : 'Complete onboarding'),
+        change: totalSavings > 0
+          ? (language === 'de' ? `Wächst auf ${formatCurrency(futureAssetValue)} bis ${retirementYear}` : `Grows to ${formatCurrency(futureAssetValue)} by ${retirementYear}`)
+          : (language === 'de' ? 'Keine Ersparnisse' : 'No savings'),
         trend: totalSavings > 0 ? 'up' as const : 'neutral' as const,
         icon: PieChart,
         color: 'from-blue-500 to-blue-600',
@@ -214,7 +229,9 @@ export const PremiumDashboard: React.FC<PremiumDashboardProps> = ({ language = '
       {
         label: t.projectedRetirement,
         value: formatCurrency(totalProjectedPension),
-        change: language === 'de' ? 'pro Monat' : 'per month',
+        change: totalProjectedPension > 0
+          ? (language === 'de' ? `Inkl. Renten, Beiträge & Vermögen` : `Incl. pensions, contributions & assets`)
+          : (language === 'de' ? 'Keine Rentenansprüche' : 'No pension claims'),
         trend: totalProjectedPension > 0 ? 'up' as const : 'neutral' as const,
         icon: Target,
         color: 'from-green-500 to-green-600',
