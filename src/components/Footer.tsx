@@ -73,8 +73,8 @@ export function Footer() {
             <nav aria-label="Rechtliche Links">
               <ul className="space-y-3 text-sm">
                 <li>
-                  <Link 
-                    href="/impressum" 
+                  <Link
+                    to="/impressum"
                     className="text-gray-300 hover:text-blue-400 transition-all duration-200 flex items-center gap-2 group focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded p-1"
                     aria-label="Impressum - Rechtliche Informationen über den Anbieter"
                   >
@@ -83,8 +83,8 @@ export function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <Link 
-                    href="/datenschutz" 
+                  <Link
+                    to="/datenschutz"
                     className="text-gray-300 hover:text-blue-400 transition-all duration-200 flex items-center gap-2 group focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded p-1"
                     aria-label="Datenschutzerklärung - Informationen zum Umgang mit persönlichen Daten"
                   >
@@ -93,8 +93,8 @@ export function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <Link 
-                    href="/agb" 
+                  <Link
+                    to="/agb"
                     className="text-gray-300 hover:text-blue-400 transition-all duration-200 flex items-center gap-2 group focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded p-1"
                     aria-label="Allgemeine Geschäftsbedingungen - Nutzungsbedingungen der Website"
                   >
@@ -149,24 +149,24 @@ export function Footer() {
           </div>
           
           <nav aria-label="Footer-Navigation" className="flex flex-wrap gap-1 text-sm">
-            <Link 
-              href="/impressum" 
+            <Link
+              to="/impressum"
               className="text-gray-400 hover:text-blue-400 transition-colors duration-200 px-2 py-1 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900"
               aria-label="Impressum"
             >
               Impressum
             </Link>
             <span className="text-gray-600 px-1" aria-hidden="true">•</span>
-            <Link 
-              href="/datenschutz" 
+            <Link
+              to="/datenschutz"
               className="text-gray-400 hover:text-blue-400 transition-colors duration-200 px-2 py-1 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900"
               aria-label="Datenschutzerklärung"
             >
               Datenschutz
             </Link>
             <span className="text-gray-600 px-1" aria-hidden="true">•</span>
-            <Link 
-              href="/agb" 
+            <Link
+              to="/agb"
               className="text-gray-400 hover:text-blue-400 transition-colors duration-200 px-2 py-1 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900"
               aria-label="Allgemeine Geschäftsbedingungen"
             >
@@ -186,10 +186,10 @@ export function Footer() {
             <div className="text-sm">
               <p id="dsgvo-title" className="font-semibold text-gray-100 mb-1">DSGVO-konform & SSL-verschlüsselt</p>
               <p className="text-gray-300 leading-relaxed">
-                Ihre Daten werden gemäß EU-DSGVO verarbeitet. 
-                Alle Berechnungen erfolgen lokal in Ihrem Browser. 
-                <Link 
-                  href="/datenschutz" 
+                Ihre Daten werden gemäß EU-DSGVO verarbeitet.
+                Alle Berechnungen erfolgen lokal in Ihrem Browser.
+                <Link
+                  to="/datenschutz"
                   className="text-blue-400 hover:text-blue-300 transition-colors duration-200 font-medium ml-1 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-800 rounded"
                   aria-label="Zur Datenschutzerklärung - Mehr über Datenschutz erfahren"
                 >

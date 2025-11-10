@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Link } from 'wouter';
 import { X, Settings, Shield, BarChart3, Target } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -280,13 +281,13 @@ export function CookieBanner({ onClose }: CookieBannerProps) {
             
             <div className="text-center border-t pt-3 mt-3">
               <p className="text-xs text-gray-500">
-                <a href="/datenschutz" className="text-blue-600 hover:text-blue-700 transition-colors">
+                <Link to="/datenschutz" className="text-blue-600 hover:text-blue-700 transition-colors">
                   Datenschutz
-                </a>
+                </Link>
                 {' • '}
-                <a href="/cookie-richtlinie" className="text-blue-600 hover:text-blue-700 transition-colors">
+                <Link to="/cookie-richtlinie" className="text-blue-600 hover:text-blue-700 transition-colors">
                   Cookie-Richtlinien
-                </a>
+                </Link>
               </p>
             </div>
           </CardContent>

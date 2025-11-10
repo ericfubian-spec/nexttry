@@ -173,6 +173,8 @@ export const PremiumDashboard: React.FC<PremiumDashboardProps> = ({ language = '
     // Project pension from contributions (simplified calculation)
     // Assumes contributions continue until retirement with 4% average return
     // and converts accumulated capital to monthly pension using 4% withdrawal rate
+    const birthYear = onboardingData.personal?.birthYear;
+    const currentYear = new Date().getFullYear();
     const yearsToRetirement = birthYear ? 67 - (currentYear - birthYear) : 30;
     const estimatedPensionFromContributions = (monthlyContribution: number, years: number): number => {
       if (monthlyContribution === 0 || years <= 0) return 0;
