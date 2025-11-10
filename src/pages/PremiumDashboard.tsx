@@ -102,6 +102,16 @@ export const PremiumDashboard: React.FC<PremiumDashboardProps> = ({ language = '
 
   const quickActions = [
     {
+      id: 'debeka-comparison',
+      title: language === 'de' ? 'Debeka vs ETF Vergleich' : 'Debeka vs ETF Comparison',
+      description: language === 'de' ? 'Entdecken Sie Ihren Steuervorteil - bis zu €37.000 sparen!' : 'Discover your tax advantage - save up to €37,000!',
+      icon: DollarSign,
+      href: '/debeka-vergleich',
+      gradient: 'from-emerald-500 to-emerald-600',
+      bgGradient: 'from-emerald-500/10 to-emerald-600/5',
+      badge: language === 'de' ? '🔥 Neu' : '🔥 New',
+    },
+    {
       id: 'calculator',
       title: t.calculator,
       description: t.calculatorDesc,
@@ -154,17 +164,55 @@ export const PremiumDashboard: React.FC<PremiumDashboardProps> = ({ language = '
     const occupationalContrib = onboardingData.occupationalPension?.amount || 0;
     const totalMonthlyContrib = privatePensionContrib + riesterContrib + ruerupContrib + occupationalContrib;
 
-    // Calculate projected retirement income
+    // Calculate projected retirement income from statutory pensions
     const publicPension = onboardingData.pensions?.public67 || 0;
     const civilPension = onboardingData.pensions?.civil67 || 0;
     const professionPension = onboardingData.pensions?.profession67 || 0;
     const zvkVblPension = onboardingData.pensions?.zvkVbl67 || 0;
-    const totalProjectedPension = publicPension + civilPension + professionPension + zvkVblPension;
 
-    // Calculate years until retirement (assuming retirement at 67)
-    const currentYear = new Date().getFullYear();
-    const birthYear = onboardingData.personal?.birthYear;
-    const yearsToRetirement = birthYear ? 67 - (currentYear - birthYear) : 0;
+    // Project pension from contributions (simplified calculation)
+    // Assumes contributions continue until retirement with 4% average return
+    // and converts accumulated capital to monthly pension using 4% withdrawal rate
+    const yearsToRetirement = birthYear ? 67 - (currentYear - birthYear) : 30;
+    const estimatedPensionFromContributions = (monthlyContribution: number, years: number): number => {
+      if (monthlyContribution === 0 || years <= 0) return 0;
+      const annualReturn = 0.04; // 4% average return
+      const monthlyReturn = annualReturn / 12;
+      const months = years * 12;
+
+      // Future value of monthly contributions (annuity formula)
+      const futureValue = monthlyContribution * ((Math.pow(1 + monthlyReturn, months) - 1) / monthlyReturn);
+
+      // Convert to monthly pension (4% withdrawal rate)
+      const monthlyPension = (futureValue * 0.04) / 12;
+      return monthlyPension;
+    };
+
+    // Calculate estimated pensions from each contribution type
+    const privatePensionEstimated = estimatedPensionFromContributions(privatePensionContrib, yearsToRetirement);
+    const riesterPensionEstimated = estimatedPensionFromContributions(riesterContrib, yearsToRetirement);
+    const ruerupPensionEstimated = estimatedPensionFromContributions(ruerupContrib, yearsToRetirement);
+    const occupationalPensionEstimated = estimatedPensionFromContributions(occupationalContrib, yearsToRetirement);
+
+    // Calculate projected income from current assets
+    // Assumes 5% annual growth until retirement, then 4% withdrawal rate
+    const assetGrowthRate = 0.05; // Conservative 5% annual growth
+    const withdrawalRate = 0.04; // Standard 4% retirement withdrawal rate
+    const futureAssetValue = yearsToRetirement > 0
+      ? totalSavings * Math.pow(1 + assetGrowthRate, yearsToRetirement)
+      : totalSavings;
+    const monthlyAssetIncome = (futureAssetValue * withdrawalRate) / 12;
+
+    // Total projected pension includes:
+    // 1. Statutory pensions (entered by user)
+    // 2. Estimated pensions from contributions (calculated with compound interest)
+    // 3. Income from current assets (grown and converted to monthly income)
+    const totalProjectedPension =
+      publicPension + civilPension + professionPension + zvkVblPension + // Statutory
+      privatePensionEstimated + riesterPensionEstimated + ruerupPensionEstimated + occupationalPensionEstimated + // Contributions
+      monthlyAssetIncome; // Asset growth
+
+    // Calculate retirement year for display
     const retirementYear = birthYear ? birthYear + 67 : currentYear;
 
     // Format currency
@@ -181,7 +229,9 @@ export const PremiumDashboard: React.FC<PremiumDashboardProps> = ({ language = '
       {
         label: t.currentSavings,
         value: formatCurrency(totalSavings),
-        change: isCompleted ? '+12.5%' : (language === 'de' ? 'Onboarding abschließen' : 'Complete onboarding'),
+        change: totalSavings > 0
+          ? (language === 'de' ? `Wächst auf ${formatCurrency(futureAssetValue)} bis ${retirementYear}` : `Grows to ${formatCurrency(futureAssetValue)} by ${retirementYear}`)
+          : (language === 'de' ? 'Keine Ersparnisse' : 'No savings'),
         trend: totalSavings > 0 ? 'up' as const : 'neutral' as const,
         icon: PieChart,
         color: 'from-blue-500 to-blue-600',
@@ -189,7 +239,9 @@ export const PremiumDashboard: React.FC<PremiumDashboardProps> = ({ language = '
       {
         label: t.projectedRetirement,
         value: formatCurrency(totalProjectedPension),
-        change: language === 'de' ? 'pro Monat' : 'per month',
+        change: totalProjectedPension > 0
+          ? (language === 'de' ? `Inkl. Renten, Beiträge & Vermögen` : `Incl. pensions, contributions & assets`)
+          : (language === 'de' ? 'Keine Rentenansprüche' : 'No pension claims'),
         trend: totalProjectedPension > 0 ? 'up' as const : 'neutral' as const,
         icon: Target,
         color: 'from-green-500 to-green-600',
@@ -347,7 +399,7 @@ export const PremiumDashboard: React.FC<PremiumDashboardProps> = ({ language = '
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.1 * index, duration: 0.4 }}
                 >
-                  <Link href={action.href}>
+                  <Link to={action.href}>
                     <motion.div
                       onHoverStart={() => setHoveredCard(action.id)}
                       onHoverEnd={() => setHoveredCard(null)}
@@ -363,6 +415,13 @@ export const PremiumDashboard: React.FC<PremiumDashboardProps> = ({ language = '
                           action.bgGradient
                         )} />
                         <CardHeader className="relative z-10 pb-4">
+                          {action.badge && (
+                            <div className="absolute -top-3 -right-3 z-20">
+                              <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-orange-500 to-red-500 text-white shadow-lg">
+                                {action.badge}
+                              </span>
+                            </div>
+                          )}
                           <div className="flex items-start justify-between">
                             <div className={cn(
                               "p-4 rounded-2xl bg-gradient-to-r shadow-soft-lg transform transition-all duration-500 group-hover:scale-110 group-hover:rotate-6",
@@ -457,13 +516,13 @@ export const PremiumDashboard: React.FC<PremiumDashboardProps> = ({ language = '
                     : 'Start planning your retirement now and secure a worry-free future.'}
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-                  <Link href="/calculator">
+                  <Link to="/calculator">
                     <Button size="lg" className="btn-premium-primary group">
                       {language === 'de' ? 'Jetzt berechnen' : 'Calculate Now'}
                       <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                     </Button>
                   </Link>
-                  <Link href="/vergleich">
+                  <Link to="/vergleich">
                     <Button size="lg" variant="outline" className="btn-premium-secondary">
                       {language === 'de' ? 'Produkte vergleichen' : 'Compare Products'}
                     </Button>

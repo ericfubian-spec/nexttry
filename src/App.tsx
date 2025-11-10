@@ -116,6 +116,7 @@ const PremiumDashboard = lazy(() => import("@/pages/PremiumDashboard"));
 const PremiumCalculator = lazy(() => import("@/pages/PremiumCalculator"));
 const PremiumFunds = lazy(() => import("@/pages/PremiumFunds"));
 const PremiumComparison = lazy(() => import("@/pages/PremiumComparison"));
+const DebekaComparison = lazy(() => import("@/pages/DebekaComparison"));
 const Dashboard = lazy(() => import("@/pages/dashboard"));
 const Home = lazy(() => import("@/pages/home"));
 const Questions = lazy(() => import("@/pages/questions"));
@@ -172,6 +173,16 @@ function Router({ language }: { language: 'de' | 'en' }) {
           <Route path="/vergleich">
             <ErrorBoundary>
               <PremiumComparison language={language} />
+            </ErrorBoundary>
+          </Route>
+          <Route path="/debeka-vergleich">
+            <ErrorBoundary>
+              <DebekaComparison language={language} />
+            </ErrorBoundary>
+          </Route>
+          <Route path="/steuervergleich">
+            <ErrorBoundary>
+              <DebekaComparison language={language} />
             </ErrorBoundary>
           </Route>
           <Route path="/custom-comparison">

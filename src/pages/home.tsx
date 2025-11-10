@@ -707,7 +707,7 @@ function Home({ initialTab = "private-pension" }: HomeProps = {}) {
           </div>
           <div className="flex items-center space-x-3">
             {/* Tax Calculator Link */}
-            <Link href="/tax-calculator">
+            <Link to="/tax-calculator">
               <Button 
                 variant="outline" 
                 size="sm" 

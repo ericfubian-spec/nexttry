@@ -64,6 +64,7 @@ export const PremiumHeader: React.FC<PremiumHeaderProps> = ({
       home: 'Dashboard',
       calculator: 'Rechner',
       comparison: 'Vergleich',
+      debekaComparison: 'Debeka Vergleich',
       funds: 'Fonds',
       taxCalculator: 'Steuerrechner',
       menu: 'Menü',
@@ -77,6 +78,7 @@ export const PremiumHeader: React.FC<PremiumHeaderProps> = ({
       home: 'Dashboard',
       calculator: 'Calculator',
       comparison: 'Comparison',
+      debekaComparison: 'Debeka Comparison',
       funds: 'Funds',
       taxCalculator: 'Tax Calculator',
       menu: 'Menu',
@@ -102,6 +104,13 @@ export const PremiumHeader: React.FC<PremiumHeaderProps> = ({
       href: '/calculator',
       icon: Calculator,
       description: language === 'de' ? 'Rente berechnen' : 'Calculate pension',
+    },
+    {
+      name: t.debekaComparison,
+      href: '/debeka-vergleich',
+      icon: Sparkles,
+      description: language === 'de' ? 'Debeka vs ETF - Steuervorteil berechnen' : 'Debeka vs ETF - Calculate tax advantage',
+      badge: language === 'de' ? 'Neu' : 'New',
     },
     {
       name: t.comparison,
@@ -154,7 +163,7 @@ export const PremiumHeader: React.FC<PremiumHeaderProps> = ({
     const isHovered = hoveredItem === item.href;
 
     return (
-      <Link href={item.href} onClick={onClick}>
+      <Link to={item.href} onClick={onClick}>
         <motion.div
           className="relative"
           onHoverStart={() => setHoveredItem(item.href)}
@@ -162,6 +171,13 @@ export const PremiumHeader: React.FC<PremiumHeaderProps> = ({
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
         >
+          {item.badge && (
+            <div className="absolute -top-1 -right-1 z-10">
+              <span className="inline-flex items-center px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-gradient-to-r from-orange-500 to-red-500 text-white shadow-md">
+                {item.badge}
+              </span>
+            </div>
+          )}
           <span
             className={cn(
               'flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-300',
@@ -294,7 +310,7 @@ export const PremiumHeader: React.FC<PremiumHeaderProps> = ({
         <div className="container mx-auto px-4 lg:px-8">
           <div className="flex h-20 items-center justify-between">
             {/* Logo / Brand */}
-            <Link href="/">
+            <Link to="/">
               <motion.div
                 className="flex items-center gap-3 cursor-pointer group"
                 whileHover={{ scale: 1.02 }}
@@ -426,7 +442,7 @@ export const PremiumHeader: React.FC<PremiumHeaderProps> = ({
                     {index > 0 && (
                       <ChevronRight className="h-4 w-4 text-muted-foreground flex-shrink-0" />
                     )}
-                    <Link href={crumb.href}>
+                    <Link to={crumb.href}>
                       <motion.span
                         className={cn(
                           'whitespace-nowrap font-medium transition-colors duration-200 hover:text-primary',

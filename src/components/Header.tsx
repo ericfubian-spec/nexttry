@@ -109,7 +109,7 @@ export const Header: React.FC<HeaderProps> = ({ language = 'de', onLanguageChang
     const Icon = item.icon;
 
     return (
-      <Link href={item.href} onClick={onClick}>
+      <Link to={item.href} onClick={onClick}>
         <span
           className={cn(
             'flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200',
@@ -165,7 +165,7 @@ export const Header: React.FC<HeaderProps> = ({ language = 'de', onLanguageChang
         <div className="flex h-16 items-center justify-between">
           {/* Logo / Brand */}
           <div className="flex items-center gap-2">
-            <Link href="/">
+            <Link to="/">
               <span className="flex items-center gap-2 text-lg font-bold text-primary hover:opacity-80 transition-opacity cursor-pointer">
                 <PieChart className="h-6 w-6" />
                 <span className="hidden sm:inline">
