@@ -15,7 +15,7 @@ function resolveBase(mode: string): string {
   // For GitHub Pages, use repository name as base
   // This will be overridden by VITE_BASE_PATH in GitHub Actions
   if (mode === "production") {
-    return "/main/";
+    return "/nexttry/";
   }
 
   return "/";
