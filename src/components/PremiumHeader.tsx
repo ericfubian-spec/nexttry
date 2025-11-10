@@ -64,6 +64,7 @@ export const PremiumHeader: React.FC<PremiumHeaderProps> = ({
       home: 'Dashboard',
       calculator: 'Rechner',
       comparison: 'Vergleich',
+      debekaComparison: 'Debeka Vergleich',
       funds: 'Fonds',
       taxCalculator: 'Steuerrechner',
       menu: 'Menü',
@@ -77,6 +78,7 @@ export const PremiumHeader: React.FC<PremiumHeaderProps> = ({
       home: 'Dashboard',
       calculator: 'Calculator',
       comparison: 'Comparison',
+      debekaComparison: 'Debeka Comparison',
       funds: 'Funds',
       taxCalculator: 'Tax Calculator',
       menu: 'Menu',
@@ -102,6 +104,13 @@ export const PremiumHeader: React.FC<PremiumHeaderProps> = ({
       href: '/calculator',
       icon: Calculator,
       description: language === 'de' ? 'Rente berechnen' : 'Calculate pension',
+    },
+    {
+      name: t.debekaComparison,
+      href: '/debeka-vergleich',
+      icon: Sparkles,
+      description: language === 'de' ? 'Debeka vs ETF - Steuervorteil berechnen' : 'Debeka vs ETF - Calculate tax advantage',
+      badge: language === 'de' ? 'Neu' : 'New',
     },
     {
       name: t.comparison,
@@ -162,6 +171,13 @@ export const PremiumHeader: React.FC<PremiumHeaderProps> = ({
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
         >
+          {item.badge && (
+            <div className="absolute -top-1 -right-1 z-10">
+              <span className="inline-flex items-center px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-gradient-to-r from-orange-500 to-red-500 text-white shadow-md">
+                {item.badge}
+              </span>
+            </div>
+          )}
           <span
             className={cn(
               'flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-300',

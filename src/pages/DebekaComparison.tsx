@@ -458,6 +458,229 @@ export const DebekaComparison: React.FC<DebekaComparisonProps> = ({ language = '
                 </Card>
               </motion.div>
             )}
+
+            {/* Lifetime Guarantee Section */}
+            <Card className="premium-card">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Shield className="h-5 w-5 text-primary" />
+                  {language === 'de' ? 'Lebenslange Absicherung' : 'Lifetime Security'}
+                </CardTitle>
+                <CardDescription>
+                  {language === 'de'
+                    ? 'Was passiert, wenn Sie 95 Jahre alt werden? Debeka garantiert lebenslange Zahlungen.'
+                    : 'What happens if you live to 95? Debeka guarantees lifetime payments.'}
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div className="text-center p-6 rounded-xl bg-gradient-to-br from-blue-500/10 to-blue-600/5 border border-blue-200/50">
+                    <Shield className="h-12 w-12 mx-auto mb-4 text-blue-600" />
+                    <h3 className="font-semibold text-lg mb-2">{t.debeka}</h3>
+                    <div className="text-sm text-muted-foreground space-y-2">
+                      <p className="flex items-center gap-2 justify-center">
+                        <Check className="h-4 w-4 text-green-600" />
+                        {language === 'de' ? 'Lebenslange Rente garantiert' : 'Lifetime pension guaranteed'}
+                      </p>
+                      <p className="flex items-center gap-2 justify-center">
+                        <Check className="h-4 w-4 text-green-600" />
+                        {language === 'de' ? 'Auch bei 95+ Jahren' : 'Even at 95+ years'}
+                      </p>
+                      <p className="flex items-center gap-2 justify-center">
+                        <Check className="h-4 w-4 text-green-600" />
+                        {language === 'de' ? 'Kein Kapitalverzehr' : 'No capital depletion'}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="text-center p-6 rounded-xl bg-gradient-to-br from-orange-500/10 to-orange-600/5 border border-orange-200/50">
+                    <AlertCircle className="h-12 w-12 mx-auto mb-4 text-orange-600" />
+                    <h3 className="font-semibold text-lg mb-2">{t.etf}</h3>
+                    <div className="text-sm text-muted-foreground space-y-2">
+                      <p className="flex items-center gap-2 justify-center">
+                        <X className="h-4 w-4 text-red-600" />
+                        {language === 'de' ? 'Keine Garantie' : 'No guarantee'}
+                      </p>
+                      <p className="flex items-center gap-2 justify-center">
+                        <X className="h-4 w-4 text-red-600" />
+                        {language === 'de' ? 'Kapital kann ausgehen' : 'Capital can run out'}
+                      </p>
+                      <p className="flex items-center gap-2 justify-center">
+                        <X className="h-4 w-4 text-red-600" />
+                        {language === 'de' ? 'Langlebigkeitsrisiko' : 'Longevity risk'}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="text-center p-6 rounded-xl bg-gradient-to-br from-purple-500/10 to-purple-600/5 border border-purple-200/50">
+                    <Shield className="h-12 w-12 mx-auto mb-4 text-purple-600" />
+                    <h3 className="font-semibold text-lg mb-2">{t.klassisch}</h3>
+                    <div className="text-sm text-muted-foreground space-y-2">
+                      <p className="flex items-center gap-2 justify-center">
+                        <Check className="h-4 w-4 text-green-600" />
+                        {language === 'de' ? 'Lebenslange Rente' : 'Lifetime pension'}
+                      </p>
+                      <p className="flex items-center gap-2 justify-center">
+                        <Check className="h-4 w-4 text-green-600" />
+                        {language === 'de' ? 'Volle Garantie' : 'Full guarantee'}
+                      </p>
+                      <p className="flex items-center gap-2 justify-center">
+                        <X className="h-4 w-4 text-orange-600" />
+                        {language === 'de' ? 'Niedrige Rendite' : 'Low returns'}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-6 p-4 bg-primary/5 rounded-lg border border-primary/20">
+                  <p className="text-sm text-center">
+                    <strong className="text-primary">
+                      {language === 'de'
+                        ? '💡 Debeka-Vorteil: Sie erhalten lebenslang '
+                        : '💡 Debeka advantage: You receive '}
+                    </strong>
+                    {formatCurrency(comparison.debeka.monthlyPension)}
+                    {language === 'de'
+                      ? '/Monat - selbst wenn Sie 100 Jahre alt werden und Ihr Kapital längst aufgebraucht wäre!'
+                      : '/month - even if you live to 100 and your capital would have run out!'}
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Flexibility Comparison */}
+            <Card className="premium-card">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <TrendingUp className="h-5 w-5 text-primary" />
+                  {language === 'de' ? 'Flexibilität & Optionen' : 'Flexibility & Options'}
+                </CardTitle>
+                <CardDescription>
+                  {language === 'de'
+                    ? 'Vergleich der Gestaltungsmöglichkeiten und Flexibilität'
+                    : 'Comparison of design options and flexibility'}
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="border-b">
+                        <th className="text-left p-3 font-semibold">
+                          {language === 'de' ? 'Merkmal' : 'Feature'}
+                        </th>
+                        <th className="text-center p-3 font-semibold">{t.debeka}</th>
+                        <th className="text-center p-3 font-semibold">{t.etf}</th>
+                        <th className="text-center p-3 font-semibold">{t.klassisch}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr className="border-b hover:bg-accent/5">
+                        <td className="p-3">{language === 'de' ? 'Auszahlungsoptionen' : 'Payout options'}</td>
+                        <td className="text-center p-3">
+                          <div className="flex flex-col items-center gap-1">
+                            <Check className="h-5 w-5 text-green-600" />
+                            <span className="text-xs text-muted-foreground">
+                              {language === 'de' ? '4 Optionen' : '4 options'}
+                            </span>
+                          </div>
+                        </td>
+                        <td className="text-center p-3">
+                          <div className="flex flex-col items-center gap-1">
+                            <Check className="h-5 w-5 text-green-600" />
+                            <span className="text-xs text-muted-foreground">
+                              {language === 'de' ? 'Unbegrenzt' : 'Unlimited'}
+                            </span>
+                          </div>
+                        </td>
+                        <td className="text-center p-3">
+                          <div className="flex flex-col items-center gap-1">
+                            <X className="h-5 w-5 text-red-600" />
+                            <span className="text-xs text-muted-foreground">
+                              {language === 'de' ? 'Nur Rente' : 'Pension only'}
+                            </span>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr className="border-b hover:bg-accent/5">
+                        <td className="p-3">{language === 'de' ? 'Vorzeitige Kündigung' : 'Early termination'}</td>
+                        <td className="text-center p-3">
+                          <Check className="h-5 w-5 text-orange-600" />
+                          <span className="text-xs text-muted-foreground block">
+                            {language === 'de' ? 'Mit Verlusten' : 'With losses'}
+                          </span>
+                        </td>
+                        <td className="text-center p-3">
+                          <Check className="h-5 w-5 text-green-600" />
+                          <span className="text-xs text-muted-foreground block">
+                            {language === 'de' ? 'Jederzeit' : 'Anytime'}
+                          </span>
+                        </td>
+                        <td className="text-center p-3">
+                          <Check className="h-5 w-5 text-orange-600" />
+                          <span className="text-xs text-muted-foreground block">
+                            {language === 'de' ? 'Mit Verlusten' : 'With losses'}
+                          </span>
+                        </td>
+                      </tr>
+                      <tr className="border-b hover:bg-accent/5">
+                        <td className="p-3">{language === 'de' ? 'Fondswechsel möglich' : 'Fund switching possible'}</td>
+                        <td className="text-center p-3"><Check className="h-5 w-5 text-green-600 mx-auto" /></td>
+                        <td className="text-center p-3"><Check className="h-5 w-5 text-green-600 mx-auto" /></td>
+                        <td className="text-center p-3"><X className="h-5 w-5 text-red-600 mx-auto" /></td>
+                      </tr>
+                      <tr className="border-b hover:bg-accent/5">
+                        <td className="p-3">{language === 'de' ? 'Beitragspausen' : 'Contribution breaks'}</td>
+                        <td className="text-center p-3"><Check className="h-5 w-5 text-green-600 mx-auto" /></td>
+                        <td className="text-center p-3"><Check className="h-5 w-5 text-green-600 mx-auto" /></td>
+                        <td className="text-center p-3"><Check className="h-5 w-5 text-orange-600 mx-auto" /></td>
+                      </tr>
+                      <tr className="hover:bg-accent/5">
+                        <td className="p-3">{language === 'de' ? 'Vererbbarkeit' : 'Inheritability'}</td>
+                        <td className="text-center p-3"><Check className="h-5 w-5 text-green-600 mx-auto" /></td>
+                        <td className="text-center p-3"><Check className="h-5 w-5 text-green-600 mx-auto" /></td>
+                        <td className="text-center p-3"><Check className="h-5 w-5 text-green-600 mx-auto" /></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* CTA Section */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+            >
+              <Card className="gradient-card text-center">
+                <CardContent className="p-8 md:p-12">
+                  <div className="max-w-2xl mx-auto space-y-6">
+                    <h2 className="text-3xl md:text-4xl font-bold">
+                      {language === 'de'
+                        ? 'Überzeugt? Fordern Sie jetzt Ihr persönliches Angebot an!'
+                        : 'Convinced? Request your personal offer now!'}
+                    </h2>
+                    <p className="text-lg text-muted-foreground">
+                      {language === 'de'
+                        ? `Mit dem Debeka-Modell sparen Sie ${formatCurrency(comparison.taxAdvantage)} an Steuern und erhalten eine garantierte lebenslange Rente.`
+                        : `With the Debeka model, you save ${formatCurrency(comparison.taxAdvantage)} in taxes and receive a guaranteed lifetime pension.`}
+                    </p>
+                    <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+                      <Button size="lg" className="btn-premium-primary group">
+                        <DollarSign className="mr-2 h-5 w-5" />
+                        {language === 'de' ? 'Jetzt Angebot anfordern' : 'Request offer now'}
+                      </Button>
+                      <Button size="lg" variant="outline" className="btn-premium-secondary">
+                        <Calculator className="mr-2 h-5 w-5" />
+                        {language === 'de' ? 'Beratungstermin vereinbaren' : 'Schedule consultation'}
+                      </Button>
+                    </div>
+                    <p className="text-xs text-muted-foreground">
+                      {language === 'de'
+                        ? '✓ Unverbindlich ✓ Kostenlos ✓ Individuelle Beratung'
+                        : '✓ Non-binding ✓ Free ✓ Individual consultation'}
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
           </div>
         </div>
       </div>

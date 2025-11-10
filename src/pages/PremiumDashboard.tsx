@@ -102,6 +102,16 @@ export const PremiumDashboard: React.FC<PremiumDashboardProps> = ({ language = '
 
   const quickActions = [
     {
+      id: 'debeka-comparison',
+      title: language === 'de' ? 'Debeka vs ETF Vergleich' : 'Debeka vs ETF Comparison',
+      description: language === 'de' ? 'Entdecken Sie Ihren Steuervorteil - bis zu €37.000 sparen!' : 'Discover your tax advantage - save up to €37,000!',
+      icon: DollarSign,
+      href: '/debeka-vergleich',
+      gradient: 'from-emerald-500 to-emerald-600',
+      bgGradient: 'from-emerald-500/10 to-emerald-600/5',
+      badge: language === 'de' ? '🔥 Neu' : '🔥 New',
+    },
+    {
       id: 'calculator',
       title: t.calculator,
       description: t.calculatorDesc,
@@ -405,6 +415,13 @@ export const PremiumDashboard: React.FC<PremiumDashboardProps> = ({ language = '
                           action.bgGradient
                         )} />
                         <CardHeader className="relative z-10 pb-4">
+                          {action.badge && (
+                            <div className="absolute -top-3 -right-3 z-20">
+                              <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-orange-500 to-red-500 text-white shadow-lg">
+                                {action.badge}
+                              </span>
+                            </div>
+                          )}
                           <div className="flex items-start justify-between">
                             <div className={cn(
                               "p-4 rounded-2xl bg-gradient-to-r shadow-soft-lg transform transition-all duration-500 group-hover:scale-110 group-hover:rotate-6",
