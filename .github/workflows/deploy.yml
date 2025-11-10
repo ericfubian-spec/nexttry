@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - 'claude/**'  # Also deploy from claude branches for testing
   workflow_dispatch:  # Allow manual trigger
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
